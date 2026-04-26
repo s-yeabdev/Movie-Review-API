@@ -148,4 +148,12 @@ else if (req.method === "DELETE" && urlParts[1] === "movies" && id) {
       });
     });
   }
+else {
+    sendResponse(res, 404, {
+      message: "Route not found",
+    });
+  }
+});
+server.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
