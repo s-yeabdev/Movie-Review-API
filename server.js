@@ -43,4 +43,38 @@ const server = http.createServer((req, res) => {
 
       sendResponse(res, 200, movie);
     });
+  }
+ else if (req.method === "POST" && req.url === "/movies") {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", () => {
+      const newMovie = JSON.parse(body);
+    if (!newMovie.title || !newMovie.rating) {
+        return sendResponse(res, 400, {
+          message: "Title and rating are required",
+        });
+      }
+     readMovies((movies) => {
+        newMovie.id = movies.length ? movies[movies.length - 1].id + 1 : 1;
+
+        movies.push(newMovie);
+
+        writeMovies(movies, (err) => {
+          if (err) {
+            return sendResponse(res, 500, {
+              message: "Error saving movie",
+            });
+          }
+
+          sendResponse(res, 201, {
+            message: "Movie added successfully",
+            movie: newMovie,
+          });
+        });
+      });
+    });
   }});
