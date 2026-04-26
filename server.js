@@ -13,3 +13,6 @@ function readMovies(callback) {
     callback(JSON.parse(data));
   });
 }
+function writeMovies(movies, callback) {
+  fs.writeFile(FILE_PATH, JSON.stringify(movies, null, 2), callback);
+}
