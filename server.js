@@ -16,3 +16,10 @@ function readMovies(callback) {
 function writeMovies(movies, callback) {
   fs.writeFile(FILE_PATH, JSON.stringify(movies, null, 2), callback);
 }
+function sendResponse(res, statusCode, data) {
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json",
+  });
+
+  res.end(JSON.stringify(data));
+}
