@@ -25,4 +25,9 @@ function sendResponse(res, statusCode, data) {
 }
 const server = http.createServer((req, res) => {
   const urlParts = req.url.split("/");
-  const id = parseInt(urlParts[2]);});
+  const id = parseInt(urlParts[2]);
+ if (req.method === "GET" && req.url === "/movies") {
+    readMovies((movies) => {
+      sendResponse(res, 200, movies);
+    });
+  }});
