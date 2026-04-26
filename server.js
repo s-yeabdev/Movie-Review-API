@@ -30,4 +30,17 @@ const server = http.createServer((req, res) => {
     readMovies((movies) => {
       sendResponse(res, 200, movies);
     });
+  }
+ else if (req.method === "GET" && urlParts[1] === "movies" && id) {
+    readMovies((movies) => {
+      const movie = movies.find((m) => m.id === id);
+
+      if (!movie) {
+        return sendResponse(res, 404, {
+          message: "Movie not found",
+        });
+      }
+
+      sendResponse(res, 200, movie);
+    });
   }});
