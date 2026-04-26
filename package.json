@@ -1,7 +1,7 @@
 {
   "name": "movie-review-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Movie Review REST API using Node.js core modules",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/s-yeabdev/Movie-Review-API.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yeabtsega Samuel",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
