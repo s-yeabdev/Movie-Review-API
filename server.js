@@ -23,3 +23,6 @@ function sendResponse(res, statusCode, data) {
 
   res.end(JSON.stringify(data));
 }
+const server = http.createServer((req, res) => {
+  const urlParts = req.url.split("/");
+  const id = parseInt(urlParts[2]);});
