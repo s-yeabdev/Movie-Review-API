@@ -77,4 +77,50 @@ const server = http.createServer((req, res) => {
         });
       });
     });
-  }});
+  }
+ else if (req.method === "PUT" && urlParts[1] === "movies" && id) {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", () => {
+      const updatedData = JSON.parse(body);
+     if (!updatedData.title || !updatedData.rating) {
+        return sendResponse(res, 400, {
+          message: "Title and rating are required",
+        });
+      }
+
+      readMovies((movies) => {
+        const movieIndex = movies.findIndex((m) => m.id === id);
+
+        if (movieIndex === -1) {
+          return sendResponse(res, 404, {
+            message: "Movie not found",
+          });
+        }
+
+        movies[movieIndex] = {
+          ...movies[movieIndex],
+          ...updatedData,
+          id: id,
+        };
+
+        writeMovies(movies, (err) => {
+          if (err) {
+            return sendResponse(res, 500, {
+              message: "Error updating movie",
+            });
+          }
+
+          sendResponse(res, 200, {
+            message: "Movie updated successfully",
+            movie: movies[movieIndex],
+          });
+        });
+      });
+    });
+  }
+});
