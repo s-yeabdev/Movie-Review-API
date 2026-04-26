@@ -123,4 +123,29 @@ const server = http.createServer((req, res) => {
       });
     });
   }
+else if (req.method === "DELETE" && urlParts[1] === "movies" && id) {
+    readMovies((movies) => {
+      const movie = movies.find((m) => m.id === id);
+
+      if (!movie) {
+        return sendResponse(res, 404, {
+          message: "Movie not found",
+        });
+      }
+
+      const filteredMovies = movies.filter((m) => m.id !== id);
+
+      writeMovies(filteredMovies, (err) => {
+        if (err) {
+          return sendResponse(res, 500, {
+            message: "Error deleting movie",
+          });
+        }
+
+        sendResponse(res, 200, {
+          message: "Movie deleted successfully",
+        });
+      });
+    });
+  }
 });
